@@ -25,6 +25,72 @@
     <div id="result">추첨 결과는?</div>
     <div id="bonus">보너스:</div>
 
-    <script></script>
+    <script>
+      // 45개 숫자 배열
+      const candidate = Array(45)
+        .fill()
+        .map((el, idx) => {
+          return idx + 1;
+        });
+
+      // 45개 숫자 배열을 섞는다.
+      const shuffle = [];
+      while (candidate.length > 0) {
+        const random = Math.floor(Math.random() * candidate.length); // 무작위 인덱스
+        const spliceArray = candidate.splice(random, 1); // 뽑은 값은 배열에 ex) [3]
+        const value = spliceArray[0]; // 3
+        shuffle.push(value);
+      }
+      console.log(shuffle);
+
+      // 6개의 숫자와 보너스 숫자를 자른 후 정렬한다.
+      const winBalls = shuffle.slice(0, 6).sort((a, b) => {
+        return a - b;
+      });
+      const bonus = shuffle[6];
+      console.log(winBalls, bonus);
+
+      const $result = document.querySelector('#result');
+      const $bonus = document.querySelector('#bonus');
+
+      // 숫자에 따른 공색깔 다르게
+      function colorize(number, $tag) {
+        if (number < 10) {
+          $tag.style.backgroundColor = 'red';
+          $tag.style.color = 'white';
+        } else if (number < 20) {
+          $tag.style.backgroundColor = 'orange';
+        } else if (number < 30) {
+          $tag.style.backgroundColor = 'yellow';
+        } else if (number < 40) {
+          $tag.style.backgroundColor = 'blue';
+          $tag.style.color = 'white';
+        } else {
+          $tag.style.backgroundColor = 'green';
+          $tag.style.color = 'white';
+        }
+      }
+
+      // 반복되는 setTimeout 함수를 없애기 위해 함수로 빼낸다.
+      const showBall = (number, $target) => {
+        const $ball = document.createElement('div');
+        $ball.className = 'ball';
+        colorize(number, $ball);
+        $ball.textContent = number;
+        $target.appendChild($ball);
+      };
+
+      // 반복문을 활용하여 반복되는 함수호출 코드를 줄인다.
+      for (let i = 0; i < winBalls.length; i++) {
+        setTimeout(() => {
+          showBall(winBalls[i], $result);
+        }, (i + 1) * 1000);
+      }
+
+      // 보너스 번호
+      setTimeout(() => {
+        showBall(bonus, $bonus);
+      }, 7000);
+    </script>
   </body>
 </html>
