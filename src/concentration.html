@@ -6,13 +6,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>카드짝맞추기</title>
     <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        max-width: 1080px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto;
+      }
+
+      #wrapper {
+        padding: 5%;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+      }
+
       .card {
         display: inline-block;
-        margin-right: 20px;
-        margin-bottom: 20px;
-        width: 70px;
-        height: 100px;
-        perspective: 140px;
+        width: 200px;
+        height: 250px;
       }
 
       .card-inner {
